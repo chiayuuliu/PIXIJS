@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/pixi.min_v4.5.5.js"></script>
+</head>
+<body>
+<script>
+    let Application = PIXI.Application,
+        Container = PIXI.Container,
+        loader = PIXI.loader,
+        resources = PIXI.loader.resources,
+        Graphics = PIXI.Graphics,
+        TextureCache = PIXI.utils.TextureCache,
+        Sprite = PIXI.Sprite;
+
+    //Create a Pixi Application
+    let app = new Application({ 
+        width: 256, 
+        height: 256,                       
+        antialiasing: true, 
+        transparent: false, 
+        resolution: 1
+        }
+    );
+    document.body.appendChild(app.view);
+
+    // 先創建一個Pixi的Graphics
+    //Rectangle
+    let rectangle = new Graphics();
+    // 邊框線
+    rectangle.lineStyle(4, 0xFF3300, 1);
+    // 填充顏色
+    rectangle.beginFill(0x66CCFF);
+    // 開始繪製(設定圖片位置/ 圖型寬高)
+    rectangle.drawRect(10, 10, 78, 104);
+    // 繪製結束
+    rectangle.endFill();
+    // 圖形位置
+    rectangle.x = 120;
+    rectangle.y = 140;
+    // 把圖形放入畫面
+    app.stage.addChild(rectangle);
+
+
+    //Circle
+    let circle = new Graphics();
+    circle.beginFill(0x9966FF);
+    circle.drawCircle(0, 0, 32);
+    circle.endFill();
+    circle.x = 64;
+    circle.y = 130;
+    app.stage.addChild(circle);
+
+    let roundBox = new Graphics();
+    roundBox.lineStyle(4, 0x99CCFF, 1);
+    roundBox.beginFill(0xFF9933);
+    roundBox.drawRoundedRect(0, 0, 84, 36, 10)
+    roundBox.endFill();
+    roundBox.x = 48;
+    roundBox.y = 190;
+    app.stage.addChild(roundBox);
+
+    // 線
+    let line = new Graphics();
+    line.lineStyle(5, 0xFFFFFF, 1);
+    line.moveTo(0, 0);
+    line.lineTo(100, 50);
+    line.x = 32;
+    line.y = 32;
+    app.stage.addChild(line);
+</script>
+    
+</body>
+</html>

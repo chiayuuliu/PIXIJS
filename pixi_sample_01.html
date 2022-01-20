@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/pixi.min_v4.5.5.js"></script>
+</head>
+<style>
+    * {
+        padding: 0;
+        margin: 0
+    }
+</style>
+
+<body>
+    <script>
+    //Aliases
+    let Application = PIXI.Application,
+        Container = PIXI.Container,
+        loader = PIXI.loader,
+        resources = PIXI.loader.resources,
+        TextureCache = PIXI.utils.TextureCache,
+        Sprite = PIXI.Sprite,
+        Rectangle = PIXI.Rectangle;
+
+    //Create a Pixi Application
+    let app = new Application({
+        width: 512,
+        height:512,                       
+        antialias: true,
+        transparent: false,
+        resolution: 1
+    }
+    );
+//Add the canvas that Pixi automatically created for you to the HTML document
+document.body.appendChild(app.view);
+
+//load a JSON file and run the `setup` function when it's done
+loader
+  .add("dungeon.png")
+  .add("explorer.png")
+  .add("treasure.png")
+  .load(setup);
+    
+// 在外面宣告變數，讓多個函式可以使用
+let dungeon, explorer, treasure, door, id;
+
+function setup() {
+    // 背景圖加進來
+    dungeon = new Sprite(resources["dungeon.png"].texture);
+    app.stage.addChild(dungeon);
+
+    // 人物圖
+    explorer = new Sprite(resources["explorer.png"].texture);
+    // 設定一開始的人物位置
+    explorer.x = 68;
+
+    //將人物圖置中(整個畫面高的一半再減去人物自己的一半)
+    explorer.y = app.stage.height / 2 - explorer.height / 2;
+    // 人物圖加入畫面
+    app.stage.addChild(explorer);
+
+    // 寶藏圖
+    treasure = new Sprite(resources["treasure.png"].texture);
+    treasure.scale.set(1.5, 1.5);
+    treasure.x = (512-68)
+    treasure.y = app.stage.height / 2 - treasure.height / 2;
+
+    app.stage.addChild(treasure);
+
+    // 動畫設定
+    app.ticker.add(delta => gameLoop(delta));
+
+}
+
+function gameLoop(delta){
+    // 當人物小於整個畫布移動到寶藏位置
+    // if(explorer.x<(512-68-(treasure.width/2))){
+    //     explorer.x+=1
+    // }
+
+    // if(explorer.x<(app.stage.width/2) && treasure.x>(app.stage.width/2)){
+    //     explorer.x+=1
+    //     treasure.x -= 1
+    // }
+}
+
+</script>
+</body>
+
+</html>

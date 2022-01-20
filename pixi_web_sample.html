@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/pixi.min_v4.5.5.js"></script>
+</head>
+<style>
+    * {
+        padding: 0;
+        margin: 0
+    }
+</style>
+
+<body>
+    <script>
+        // 背景圖
+        const app = new PIXI.Application({
+            width: 400, 
+            height: 300, 
+            // backgroundColor: 0x1099bb, 
+            backgroundColor: 0x1090ab, 
+            // resolution: window.devicePixelRatio || 1,
+            resolution:1,
+        });
+        // 設定畫面同螢幕大小
+        app.renderer.resize(window.innerWidth, window.innerHeight);
+
+        // 把背景加到body
+        document.body.appendChild(app.view);
+
+        const container = new PIXI.Container();
+
+        app.stage.addChild(container);
+
+        // 建立圖片
+        const texture = PIXI.Texture.from('blob.png');
+
+        // Create a 5x5 grid of bunnies
+        for (let i = 0; i < 25; i++) {
+            const bunny = new PIXI.Sprite(texture);
+            bunny.anchor.set(0.5);
+            
+            // X 位置範圍 40,80,...160
+            bunny.x = (i % 5) * 40;
+            // Y 位置範圍 0,0,0,0,0,40....200
+
+            bunny.y = Math.floor(i / 5) * 40;
+            container.addChild(bunny);
+        }
+
+        // Move container to the center
+        // 移動到整個畫面的中間(但會是左上角的點放在中間)
+        container.x = app.screen.width / 2;
+        container.y = app.screen.height / 2;
+
+        // Center bunny sprite in local container coordinates
+        // 把對齊的點一到中間
+        container.pivot.x = container.width / 2;
+        container.pivot.y = container.height / 2;
+
+        // 設定動畫
+        // Listen for animate update
+        app.ticker.add((delta) => {
+            // rotate the container!
+            // use delta to create frame-independent transform
+            container.rotation -= 0.01 * delta ;
+            // console.log(delta)
+
+        });
+
+
+        console.log(delta)
+    </script>
+</body>
+
+</html>

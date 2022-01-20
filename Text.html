@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/pixi.min_v4.5.5.js"></script>
+</head>
+
+<body>
+    <script>
+        let Application = PIXI.Application,
+            Text = PIXI.Text,
+            TextStyle = PIXI.TextStyle;
+
+        //Create a Pixi Application
+        let app = new Application({
+            width: 256,
+            height: 256,
+            antialiasing: true,
+            transparent: true,
+            resolution: 1,
+            backgroundcoloe: 0x6699ff,
+        }
+        );
+        document.body.appendChild(app.view);
+
+        
+
+        let style = new TextStyle({
+        fontFamily: "Arial",
+        fontSize: 40,
+        fill: "white",
+        stroke: '#f03300',
+        strokeThickness: 2,
+        dropShadow: true,
+        dropShadowColor: "#000f00",
+        // 陰影光暈
+        dropShadowBlur: 1,
+        // 陰影角度
+        dropShadowAngle: Math.PI / 10,
+        // 陰影距離
+        dropShadowDistance: 6,
+        });
+
+        let message = new Text("Hello Pixi!", style);
+        // 位置
+        message.position.set(14, 16);
+        app.stage.addChild(message);
+
+        // let styledMessage = new Text("Styled Text", style);
+
+        //Position it and add it to the stage
+        styledMessage.position.set(54, 128);
+        app.stage.addChild(styledMessage);
+    </script>
+
+</body>
+
+</html>

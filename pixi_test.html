@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+
+    }
+</style>
+<body>
+    <canvas id="main" ></canvas>
+    <script src="/pixi.min_v4.5.5.js"></script>
+<script>
+    //  第一個創建方式
+    // console.log(PIXI.VERSION);
+
+    // 創一個 Render 自動判斷是否有 webGL
+    // var renderer = PIXI.autoDetectRenderer(256, 256);
+    // // 新增至頁面
+    // document.body.appendChild(renderer.view);
+    // // 創建 Stage 
+    // var stage = new PIXI.Container();
+    // // 以 Render 去渲染 Stage
+    // renderer.render(stage);
+
+
+    // 使用我們自創的 HTML Tag - canvas#main 
+    // 給予 256 X 256 的大小
+    var main = new PIXI.autoDetectRenderer(256, 256, {
+                view: document.getElementById('main'),
+                antialias: false, 
+                transparent: false, 
+                resolution: 1
+            }
+        );
+
+    // 創建 Stage 
+    var stage = new PIXI.Container();
+
+    // 以 Render 去渲染 Stage
+    main.render(stage);
+    // 得到canvas 的物件寬高
+    var w = main.view.width
+    var h = main.view.height
+
+    console.log('w',w)
+    console.log('h',h)
+
+    main.autoResize = true;
+    main.resize(512, 512);
+    main.view.style.position = "absolute";
+    main.view.style.display = "block";
+    // main.autoResize = true;
+    // main.resize(window.innerWidth, window.innerHeight);
+
+    // 建模(只是個模型還沒有圖案)
+    var texture = PIXI.utils.TextureCache["images/cat.png"];
+    
+    // 上圖(把圖案上到模型上)
+    var logo = new PIXI.Sprite(texture);
+
+    // 我們需要使用 PIXI 的載入器來將圖片做成 Texture Cache。
+
+
+    // PIXI.loader
+    // .add("images/cat.png")
+    // .load(init);
+
+    // function init() {
+    //     var sprite = new PIXI.Sprite(
+    //         PIXI.loader.resources["images/cat.png"].texture // get Texture Cache
+    //     );
+    // }
+
+
+    // progress handler 讓你在各種資源載入的時候可以監控進度，或是你想要在某個資源載入後優先做某些 loading 動畫等動作，都能從此 API 去達到。
+
+    PIXI.loader
+    .add([
+        "cat.png",
+        // "blob.png",
+        // "dungeon.png"
+    ],callback(url))
+    // loading 的過程中會執行的func
+    .on("progress", loadProgressHandler)
+    // 完成的時候才會執行init
+    .load(init);
+
+    function callback(url) {
+        console.log('url', url)
+    }
+    // 進度條，會回傳兩個參數
+    function loadProgressHandler(loader, resource,url) {
+        // console.log("loading"); 
+        // 顯示已載入的檔案路徑
+        // console.log("loading: " + resource.url); 
+        // 顯示已載入資源百分比
+        // console.log("progress: " + (loader.progress | 0) + "%"); 
+
+        // console.log("resource.name: " + resource.name);
+        console.log('loader',loader)
+        console.log('resource',resource)
+
+
+    }
+
+    function init() {
+        console.log("init");
+    }
+
+</script>
+</body>
+</html>

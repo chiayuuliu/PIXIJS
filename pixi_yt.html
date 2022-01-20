@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/pixi.min_v4.5.5.js"></script>
+
+</head>
+
+    <style>* {padding: 0; margin: 0}</style>
+
+<body>
+    <script type="text/javascript">
+        let type = "WebGL"
+        if(!PIXI.utils.isWebGLSupported()){
+          type = "canvas"
+        }
+    
+        PIXI.utils.sayHello(type)
+  
+
+        //Create a Pixi Application
+        let app = new PIXI.Application({
+            width: 256,         // default: 800
+            height: 256,        // default: 600
+            // 避免圖片放大，像素改變
+            antialias: true,    // default: false
+            transparent: false, // default: false
+            // 支援retina 解析度
+            resolution: 1,       // default: 1
+            // 也可新增屬性
+            backgroundColor : 0x065621,
+        });
+
+        
+
+        //Add the canvas that Pixi automatically created for you to the HTML document
+        document.body.appendChild(app.view);
+
+        PIXI.loader
+        // 一個一個載入圖片
+        // .add("cat.png")
+        // .add("blob.png")
+        // .add("dungeon.png")
+
+        // 用array 方式載入圖片
+        .add(["cat.png","blob.png","dungeon.png"])
+        .load(loadOver); //當圖片載入完成後執行的函式
+
+        function loadOver() {
+        //This code will run when the loader has finished loading the image
+        // 載入完成後 要用resources放入 sprite，可用變數帶入
+        let link = PIXI.loader.resources
+        let cat = new PIXI.Sprite(link["cat.png"].texture);
+        let cat2 = new PIXI.Sprite(PIXI.loader.resources["blob.png"].texture);
+        let cat3 = new PIXI.Sprite(PIXI.loader.resources["dungeon.png"].texture);
+
+            // pixi js 提供的API addChild，把圖片丟進去
+            // app.stage.addChild(cat3)
+            app.stage.addChild(cat)
+            app.stage.addChild(cat2)
+
+            // 設置圖片位置
+            cat.x=100;
+            cat.y = 100; 
+            cat.position.set(50, 50)
+            //  兩種消失的方式
+            //此方式還是有在畫面上，只是隱藏
+            // cat.visible = false 
+            window.addEventListener('click',()=>{
+                // 是完全移除
+                app.stage.removeChild(cat)
+            })
+        }
+        
+      </script>
+</body>
+</html> 

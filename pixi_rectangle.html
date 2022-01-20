@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/pixi.min_v4.5.5.js"></script>
+</head>
+<style>
+    * {
+        padding: 0;
+        margin: 0
+    }
+</style>
+<body>
+    <script>
+        let Application = PIXI.Application,
+            Container = PIXI.Container,
+            loader = PIXI.loader,
+            resources = PIXI.loader.resources,
+            TextureCache = PIXI.utils.TextureCache,
+            Sprite = PIXI.Sprite;
+
+        //Create a Pixi Application
+        let app = new PIXI.Application({
+            width: 400,
+            height: 256,
+            antialias: true,
+            transparent: false,
+            resolution: 1,
+            backgroundColor: 0x06562,
+        });
+
+        document.body.appendChild(app.view);
+
+        PIXI.loader
+            // 用array 方式載入圖片
+            .add("blob.png")
+            .load(setup);
+
+        function setup() {
+            // 使用別名
+            let blob = TextureCache["blob.png"];
+            let rectangle = new Rectangle(30, 30, 64, 64);
+            texture.frame = rectangle;
+            
+            let rocket = new Sprite(texture);
+            rocket.x = 32;
+            rocket.y = 32;
+
+            app.stage.addChild(blob)
+
+            renderer.render(stage);
+
+        }
+
+    </script>
+</body>
+
+</html>

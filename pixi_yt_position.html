@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/pixi.min_v4.5.5.js"></script>
+
+</head>
+
+<style>
+    * {
+        padding: 0;
+        margin: 0
+    } 
+</style>
+
+<body>
+    <script type="text/javascript">
+        //Create a Pixi Application
+        let app = new PIXI.Application({
+            width: 512,         // default: 800
+            height: 512,        // default: 600
+            // 避免圖片放大，像素改變
+            antialias: true,    // default: false
+            transparent: false, // default: false
+            // 支援retina 解析度
+            resolution: 1,       // default: 1
+            // 也可新增屬性
+            backgroundColor: 0x065621,
+        });
+
+
+
+        //Add the canvas that Pixi automatically created for you to the HTML document
+        document.body.appendChild(app.view);
+
+        PIXI.loader
+            // 一個一個載入圖片
+            .add("cat.png")
+            .load(loadOver); //當圖片載入完成後執行的函式
+
+        function loadOver() {
+            let link = PIXI.loader.resources
+            let cat = new PIXI.Sprite(link["cat.png"].texture);
+
+            app.stage.addChild(cat)
+
+            // 設置圖片位置
+            cat.position.set(300, 150)
+            cat.scale.set(1.5, 1.5); 
+            cat.rotation = 1;
+            
+            // 把中心點設定在中間
+            cat.anchor.x = 0.5;
+            cat.anchor.y = 0.5;
+             
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+<style>
+    *{
+        padding: 0;
+        margin: 0;
+    }
+</style>
+<body>
+    <script src="/pixi.min_v4.5.5.js"></script>
+
+<script>
+
+    let app = new PIXI.Application({
+        width: 512,
+        height: 512,
+        antialias: false,    // default: false
+        transparent: false, // default: false
+        resolution: 1,     
+    });
+    // 改顏色
+    app.renderer.backgroundColor = 0x061639;
+
+    app.renderer.autoResize = true;
+
+    app.renderer.view.style.border = "10px solid lightblue";
+
+    document.body.appendChild(app.view);
+
+
+
+    PIXI.loader
+    .add("cat.png")
+    .add("dungeon.png")
+    .load(setup);
+
+    let cat
+    function setup() {
+
+    //Create the cat sprite
+    let cat = new PIXI.Sprite(PIXI.loader.resources["cat.png"].texture);
+    cat.y=96;
+    app.stage.addChild(cat);
+
+
+    // let background = new PIXI.Sprite(PIXI.loader.resources["dungeon.png"].texture);
+
+    // 把圖片加入畫面
+    // app.stage.addChild(cat);
+    // app.stage.addChild(background);
+
+
+
+    // 動畫設定
+    app.ticker.add(delta => gameLoop(delta));
+
+    //If you ever need to, here's how you can clean out WebGL's GPU
+    //memory manually
+    /*
+    Object.keys(TextureCache).forEach(function(texture) {
+    TextureCache[texture].destroy(true);
+    
+    });
+    */
+    // app.stage.removeChild(background)
+    // cat.visible = false;
+
+    }
+    function gameLoop(delta){
+        // cat.x += 1;
+        console.log(cat.x)
+    }
+
+    </script>
+</body>
+</html>
