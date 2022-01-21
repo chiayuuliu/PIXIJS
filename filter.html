@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/pixi.min_v4.5.5.js"></script>
+
+</head>
+<body>
+<script>
+    const app = new PIXI.Application({
+        width: 256, 
+        height: 256,                       
+        antialiasing: true, 
+        transparent: false, 
+        resolution: 1
+    });
+    document.body.appendChild(app.view)
+
+    let rect = new PIXI.Graphics()
+    rect.beginFill(0x00ff00)
+    rect.drawRect(40, 40, 200, 200);
+    rect.endFill();
+
+    // rect.filter =  new.PIXI.filter.BlurFilter();
+
+    app.stage.addChild(rect);
+    
+
+</script>
+    
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/pixi.min_v4.5.5.js"></script>
+
+</head>
+
+<body>
+    <script>
+        const app = new PIXI.Application({
+            width: 256,
+            height: 256,
+            antialiasing: true,
+            transparent: false,
+            resolution: 1
+        });
+        document.body.appendChild(app.view)
+
+        const outlineFilterBlue = new PIXI.filters.OutlineFilter(2, 0x99ff99);
+        const outlineFilterRed = new PIXI.filters.GlowFilter(15, 2, 1, 0xff9999, 0.5);
+
+
+        function filterOn() {
+            this.filters = [outlineFilterRed];
+        }
+        function filterOff() {
+            this.filters = [outlineFilterBlue];
+        }
+
+        for (let i = 0; i < 20; i++) {
+            const cat = PIXI.Sprite.from('cat.png');
+            cat.interactive = true;
+            cat.position.set((Math.random() * 2 - 1) * 300 | 0, (Math.random() * 2 - 1) * 200 | 0);
+            cat.scale.x = (Math.random() * 3 | 0 * 0.1) + 1;
+            cat.on('pointerover', filterOn)
+                .on('pointerout', filterOff);
+            filterOff.call(cat);
+            app.stage.addChild(cat);
+        }
+
+
+    </script>
+
+</body>
+
+</html>
