@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/pixi.min_v4.5.5.js"></script>
+</head>
+    <style>
+    * {
+        padding: 0; margin: 0
+    }
+    body{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    canvas{
+        background-color: antiquewhite;
+    }
+    </style>
+<body>
+    <script>
+        let app = new PIXI.Application({
+            width: 500,
+            height: 500,
+            antialias: true,
+            transparent: true,
+            // resolution: 1,
+            // backgroundColor : 0x065621,
+        });
+
+        document.body.appendChild(app.view);
+
+        var cat = PIXI.Sprite.fromImage('cat.png');
+        app.stage.addChild(cat);
+        cat.x=120
+        cat.y=100 
+
+        app.ticker.add(delta=>{
+            // 設定中心點轉
+            cat.anchor.x = 0.5;
+            cat.anchor.y = 0.5;
+            cat.rotation += 0.05*delta
+        })
+        // app.ticker.stop();
+
+        console.log(app.renderer.plugins.interaction.mouse.global.x)
+
+
+
+      </script>
+</body>
+</html> 

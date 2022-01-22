@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/pixi.min_v4.5.5.js"></script>
+</head>
+    <style>
+    * {
+        padding: 0; margin: 0
+    }
+    body{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    canvas{
+        background-color: antiquewhite;
+    }
+    </style>
+<body>
+    <script>
+        let app = new PIXI.Application({
+            width: 500,
+            height: 500,
+            antialias: true,
+            transparent: true,
+            // resolution: 1,
+            // backgroundColor : 0x065621,
+        });
+
+        document.body.appendChild(app.view);
+
+        var cat = PIXI.Sprite.fromImage('cat.png');
+        app.stage.addChild(cat);
+        cat.x=120
+        cat.y=100
+        
+        // 互動物件在沒有設定 interactive = true 時不會被感應
+        // 如果沒有下interactive true 後面的互動效果會沒用
+        //cat.interactive = true; // 設定可以互動
+        //cat.buttonMode = true; // 當滑鼠滑過時顯示為pointer圖示
+        cat.click = function(){
+            alert('click cat');
+        }
+
+        // 也可以對 stage 下互動事件:所有加進去stage的物件都可以有互動效果，但stage 空白處無法點
+        app.stage.interactive = true;
+        app.stage.buttonMode = true;
+        app.stage.click = function(){
+            alert('click stage');
+        }
+
+      </script>
+</body>
+</html> 

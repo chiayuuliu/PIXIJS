@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/pixi.min_v4.5.5.js"></script>
+</head>
+    <style>
+    * {
+        padding: 0; margin: 0
+    }
+    body{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    </style>
+<body>
+    <script>
+        let app = new PIXI.Application({
+            width: 500,
+            height: 500,
+            antialias: true,
+            transparent: false,
+            // resolution: 1,
+            backgroundColor : 0x1099bb,
+        });
+
+        document.body.appendChild(app.view);
+
+        const texture = PIXI.Texture.from('blob.png')
+
+        console.log(texture.height)
+        // x , y 位置取整數        
+        // create 10 隻 cat
+        for (let i = 0; i<10; i++){
+            createCat(Math.floor(Math.random()*app.screen.width)-texture.width
+            ,Math.floor(Math.random()*app.screen.height-1))
+        }
+
+        function createCat(x,y) {
+            const cat = new PIXI.Sprite(texture)
+            // 設定cat有互動效果
+            cat.interactive = true;
+            cat.buttonMode = true;
+            cat.anchor.set(0.5);
+
+            // 任意排列cat 位置
+            cat.x=x
+            cat.y=y
+            app.stage.addChild(cat)
+
+            cat
+            .on('pointerdown', onDragStart)
+            .on('pointerup', onDragEnd)
+            .on('pointerupoutside', onDragEnd)
+            .on('pointermove', onDragMove);
+
+
+            // 事件裡 data.identifier 可以取得事件的 ID,如果是滑鼠事件時，data.identifier 會是 MOUSE
+            function onDragStart(event) {
+                // 儲存data 
+                this.data=event.data
+                this.alpha = 0.5
+                // 設定拖移行為true
+                this.dragging = true
+                // console.log(event.data.getLocalPosition(this.parent))
+                console.log(event.data)
+            }
+            function onDragEnd(event) {
+                this.data=null
+                this.alpha = 1
+                // 設定拖移行為true
+                this.dragging = false
+            }
+            function onDragMove() {
+            if (this.dragging) {
+                // const newPosition = this.data.getLocalPosition(this.parent);
+                // 
+                const newPosition = this.data.global;
+                this.x = newPosition.x;
+                this.y = newPosition.y;
+            }}
+
+        }
+
+      </script>
+</body>
+</html> 
