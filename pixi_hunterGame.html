@@ -100,7 +100,7 @@
                 blobs.push(blob);
 
                 gameScene.addChild(blob);
-
+                console.log(blobs)
             }
 
             // 建立 hp bar 的container 
@@ -137,7 +137,7 @@
             app.stage.addChild(gameOverScene);
 
             // 一開始先讓gameover畫面隱藏
-            // gameOverScene.visible = false;
+            gameOverScene.visible = false;
 
             // 建立文字sprite 
             let style = new TextStyle({
@@ -197,16 +197,111 @@
                     explorer.vy = 0;
                 }
             };
-
-
+            // 設定遊戲狀態
+            state = play;
+            // 遊戲動畫
+            app.ticker.add(delta => gameloop(delta))
         }
 
-        // function randomInt(min, max) {
-        //     return Math.floor(Math.random() * (max-min));
-        // }
+        function gameloop(delta) {
+            state(delta)
+        }
 
-        function randomInt(min, max) {
-            return Math.floor(Math.random() * (max - min + 1)) + min;
+        function play(delta) {
+            // 人物的位置加上移動的距離
+            explorer.x+= explorer.vx;
+            explorer.y+= explorer.vy;
+        
+            // 人物在活動範圍內
+            contain(explorer,{
+                x:28,
+                y:10,
+                width:488,
+                height:480
+            })
+
+            // 一開始先設定人物跟blobs沒有碰撞
+            let explorerHit = false;
+
+            // 把每個blob都做移動處理，並check 沒有超出範圍
+            blobs.forEach(blob => {
+                // 移動blob
+                blob.y += blob.vy;
+                // 控制blob垂直位置不要超過活動範圍，超過的話，轉向
+                let blobHitsWall = contain(blob, {x:28,y:10,width:488, height:480});
+                if(blobHitsWall ==="top" || blobHitsWall ==="bottom"){
+                    blob.vy *= -1;
+                }
+                // 測試碰撞，任何碰撞就把explorerHit轉換成true
+                if(hitTestRectangle (explorer,blob)){
+                    explorerHit = true;
+                }
+            });
+
+            // 如果人物有碰撞到blob的話..
+            if(explorerHit){
+                // 讓人物設定半透明
+                explorer.alpha = 0.5;
+                // 減少血量
+                healthBar.outer.width-=1 
+            }else{
+                // 沒有被碰撞到的話，不要設定成半透明
+                explorer.alpha = 1;
+            }
+
+            // check人物跟treasure 有沒有碰撞
+            if(hitTestRectangle(explorer,treasure)){
+                // 如果有碰到的話，讓treasure 黏在 explorer上
+                treasure.x = explorer.x+8;
+                treasure.y = explorer.y+8;
+            }
+
+            // 確認人物血量是否還夠
+            if(healthBar.outer.width<0){
+                state = end;
+                message.text = "You Lost!";
+            }
+            // 如果寶藏碰到門口，就贏了
+            if(hitTestRectangle(treasure,door)){
+                // 如果有碰到的話，讓treasure 黏在 explorer上
+                // 表示觸發到end function 
+                state=end;
+                message.text="You Won!"
+            }
+
+            function end() {
+                gameScene.visible = false;
+                gameOverScene.visible = true;
+            }
+
+            // contain function(一開始有設定,sprite跟活動範圍位置)
+            function contain(sprite,container) {
+                let collision = undefined;
+                // left，如果sprite的x 位置小於container的x,就讓sprite 在最左邊，並回傳left,表示碰到範圍左邊
+                if(sprite.x < container.x){
+                    sprite.x = container.x
+                    collision = "left"
+                }
+                // top
+                if(sprite.y<container.y){
+                    sprite.y = container.y
+                    collision = "top"
+                }
+                // right
+                if(sprite.x+sprite.width>container.width){
+                    sprite.x = container.width - sprite.width
+                    collision = "right"
+                }
+                // bottom
+                if(sprite.y+sprite.height>container.height){
+                    sprite.y = container.height - sprite.height;
+                    collision = "bottom"
+                }
+
+                // 回傳碰到的狀態
+                return collision
+            }
+
         }
 
 
@@ -261,8 +356,47 @@
             //`hit` will be either `true` or `false`
             return hit;
         };
+    
+        function randomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+        // 鍵盤控制function
+        function keyboard(keyCode) {
+            var key = {}
+            key.code = keyCode;
+            key.isDown = false;
+            key.isUp = true;
+            key.press = undefined;
+            key.release = undefined;
 
-
+            // 往下按的function
+            key.downHandler = function (event) {
+                if(event.keyCode === key.code){
+                    // 兩個都是true 的時候觸發
+                    if(key.isUp && key.press){
+                        key.release();
+                        key.isDown = true;
+                        key.isUp = false;
+                    }
+                }
+                event.preventDefault();
+            };
+            // 放開時的處理function
+            key.upHandler = function (event) {
+                if(event.keyCode === key.code){
+                    if(key.isDown && key.release){
+                        key.release();
+                        key.isDown = false;
+                        key.isUp = true;
+                    }
+                }
+                event.preventDefault();
+            };
+            // **研究用法
+            window.addEventListener("keydown",key.downHandler.bind(key),false);
+            window.addEventListener("keyup",key.upHandler.bind(key),false);
+        }
+    
     </script>
 </body>
 
