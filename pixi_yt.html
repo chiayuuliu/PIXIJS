@@ -34,8 +34,6 @@
             backgroundColor : 0x065621,
         });
 
-        
-
         //Add the canvas that Pixi automatically created for you to the HTML document
         document.body.appendChild(app.view);
 
@@ -62,8 +60,9 @@
             app.stage.addChild(cat)
             app.stage.addChild(cat2)
 
+            cat.roration = 90 * (Math.PI/180)
             // 設置圖片位置
-            cat.x=100;
+            cat.x=10;
             cat.y = 100; 
             cat.position.set(50, 50)
             //  兩種消失的方式

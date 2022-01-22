@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/pixi.min_v4.5.5.js"></script>
+
+</head>
+    <style>
+    * {
+        padding: 0; margin: 0
+    }
+    body{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    canvas{
+        background-color: antiquewhite;
+        /* margin: 20px; */
+    }
+    </style>
+<body>
+    <script>
+        let app = new PIXI.Application({
+            width: 500,
+            height: 500,
+            antialias: true,
+            transparent: true,
+            // resolution: 1,
+            // backgroundColor : 0x065621,
+        });
+
+        document.body.appendChild(app.view);
+
+        var cat = PIXI.Sprite.fromImage('cat.png');
+        app.stage.addChild(cat);
+        cat.x=120
+        cat.y=100 
+
+        // 設定遮罩
+        var maskGraphic = new PIXI.Graphics();
+        maskGraphic.beginFill(0xff0000) //使用不透明色快
+        maskGraphic.lineStyle(20, 0x000000, 0);
+        maskGraphic.drawRect(50, 50, 100, 150);
+        maskGraphic.endFill();
+        // 設定遮罩，會把不在maskGraphic範圍內的圖形遮住(即便邊框線設定成透明)
+        // cat.mask = maskGraphic; 
+        app.stage.addChild(maskGraphic)
+
+      </script>
+</body>
+</html> 

@@ -1,22 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="/pixi.min_v4.5.5.js"></script>
-
 </head>
-
 <style>
     * {
         padding: 0;
         margin: 0
     }
 </style>
-
 <body>
     <script type="text/javascript">
         //Create a Pixi Application
@@ -56,8 +52,10 @@
             animals.addChild(hedgehog)
             animals.addChild(tiger)
 
-            animals.x=100;
+            animals.x=300;
             animals.y=150;
+            // 旋轉弧度寫法
+            animals.rotation = 45 * (Math.PI / 180);
             // 會提供cat在外面的位置, 不會受到container 影響
             console.log(animals.toGlobal(cat));
             // 也可以這樣寫，先抓到cat 的父層
@@ -70,7 +68,7 @@
 
             // 沒有下global 抓到的位置會不準確
             console.log('x',cat.x);
-
+           
             // 放圖片到畫面中
             app.stage.addChild(animals)
         }
