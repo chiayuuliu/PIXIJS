@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/pixi.min_v4.5.5.js"></script>
+</head>
+    <style>
+    * {
+        padding: 0; margin: 0
+    }
+    </style>
+<body>
+    <script>
+        let app = new PIXI.Application({
+            width: 500,
+            height: 500,
+            antialias: true,
+            transparent: false,
+            // resolution: 1,
+            backgroundColor : 0x1099bb,
+        });
+
+        document.body.appendChild(app.view);
+        
+        const rect = new PIXI.Graphics()
+        .beginFill(0x00ff00)
+        .drawRect(40,40,200,200)
+
+        // 雜質filter
+        // rect.filters = [new PIXI.filters.NoiseFilter()]
+        // blur filter
+        // rect.filters = [new PIXI.filters.BlurFilter()]
+        // rect.filters = [new PIXI.filters.DisplacementFilter()]
+
+
+
+        app.stage.addChild(rect)
+
+
+        
+
+      </script>
+</body>
+</html> 

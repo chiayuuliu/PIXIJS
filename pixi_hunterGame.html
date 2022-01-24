@@ -374,7 +374,7 @@
                 if(event.keyCode === key.code){
                     // 兩個都是true 的時候觸發
                     if(key.isUp && key.press){
-                        key.release();
+                        key.press();
                         key.isDown = true;
                         key.isUp = false;
                     }

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/pixi.min_v4.5.5.js"></script>
+</head>
+    <style>
+    * {
+        padding: 0; margin: 0
+    }
+    </style>
+<body>
+    <script>
+        let app = new PIXI.Application({
+            width: 500,
+            height: 500,
+            antialias: true,
+            transparent: false,
+            // resolution: 1,
+            backgroundColor : 0x1099bb,
+        });
+
+        document.body.appendChild(app.view);
+        var cat = PIXI.Sprite.fromImage('cat.png');
+        app.stage.addChild(cat)
+        cat.scale.set(0.8,0.8)
+        cat.anchor.set(0.5);
+        cat.rotation = 0.5; 
+
+
+        const triangle = new PIXI.Graphics()
+        triangle.beginFill(0x000000, 0.3);
+        triangle.moveTo(0,0);
+        triangle.lineTo(
+            Math.cos(0 * ( 60 )*(Math.PI / 180)) * 100,
+            Math.sin( 0 * (60)*(Math.PI/180))*100
+        );
+        triangle.lineTo(
+            Math.cos( 1 * ( 60 ) * (Math.PI / 180)) * 100,
+            Math.sin( 1 * ( 60 ) * (Math.PI / 180)) * 100
+        );
+        triangle.lineTo(0,0);
+
+        let halfwidth = app.screen.width/2
+        let halfheight = app.screen.height/2
+        console.log(triangle.width/2)
+
+        triangle.position.set(app.screen.width/2, app.screen.height/2)
+        // cat.position.set((app.screen.width/2)+(cat.width), app.screen.height/2+cat.height)
+        cat.position.set(halfwidth+triangle.width/2,halfheight+triangle.height/2)
+        app.stage.addChild(triangle)
+
+        // cat.mask = triangle
+        
+
+
+
+
+      </script>
+</body>
+</html> 

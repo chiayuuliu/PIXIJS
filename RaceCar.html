@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>race car</title>
+    <script src="/pixi.min_v4.5.5.js"></script>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    canvas{
+        background-color: rebeccapurple;
+    }
+</style>
+<body>
+    <script>
+
+        let Application = PIXI.Application,
+            Container = PIXI.Container,
+            loader = PIXI.loader,
+            resources = PIXI.loader.resources,
+            Graphics = PIXI.Graphics,
+            TextureCache = PIXI.utils.TextureCache,
+            Sprite = PIXI.Sprite,
+            Text = PIXI.Text,
+            TextStyle = PIXI.TextStyle;
+
+        let app = new Application({
+            width: window.innerWidth,
+            height: 300,
+            antialiasing: true,
+            transparent: true,
+            resolution: 1
+        }
+        );
+
+        document.body.appendChild(app.view);
+
+        PIXI.loader
+        .add("blob.png")
+        .load(setup)
+
+        // let blobs;
+        console.log(app.stage)
+
+        function setup() {
+            let link = PIXI.loader.resources
+            // app.stage.addChild(blob)
+            // blob.x=window.innerWidth-50;
+            // blob.y = 25; 
+            
+            // 設定每一隻
+            let BlobsNumber = 5,
+            // 每一隻間距
+            spacing = 50,
+            // 第一支距離top距離
+            yOffset = 25,
+            speed = 2,
+
+            // 建立一個陣列放blob資訊
+
+            blobs = []
+
+            for(let i = 0 ; i<BlobsNumber; i++){
+                let blob = new PIXI.Sprite(link["blob.png"].texture);
+                // 每一隻的出發點X 位置都一樣
+                let x = window.innerWidth-50;
+                let y = spacing * i + yOffset;
+
+                blob.x=x
+                blob.y=y
+                console.log(y)
+                blobs.push(blob)
+                app.stage.addChild(blob)
+            }
+
+        }
+
+        
+
+    </script>
+</body>
+</html> 
