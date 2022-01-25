@@ -44,14 +44,13 @@
         .add("blob.png")
         .load(setup)
 
-        // let blobs;
-        console.log(app.stage)
+        let blobs, state;
 
         function setup() {
+            gameScene = new Container();
+            app.stage.addChild(gameScene)
+
             let link = PIXI.loader.resources
-            // app.stage.addChild(blob)
-            // blob.x=window.innerWidth-50;
-            // blob.y = 25; 
             
             // 設定每一隻
             let BlobsNumber = 5,
@@ -59,10 +58,9 @@
             spacing = 50,
             // 第一支距離top距離
             yOffset = 25,
-            speed = 2,
+            speed = -2,
 
             // 建立一個陣列放blob資訊
-
             blobs = []
 
             for(let i = 0 ; i<BlobsNumber; i++){
@@ -73,14 +71,37 @@
 
                 blob.x=x
                 blob.y=y
-                console.log(y)
+
+
+                // blob.vx = -2
                 blobs.push(blob)
-                app.stage.addChild(blob)
+                console.log(blobs)
+                // 把blob 加入 container 的畫面
+                gameScene.addChild(blob)
+
+                // 設定遊戲狀態
+                state = play;
+
+                // 遊戲動畫
+                app.ticker.add(delta => gameLoop(delta));
+
+                function gameLoop(delta) {
+                    state(delta)
+                }
+        
+                function play(delta) {
+                    blobs.forEach(function (blob) {
+                        // blob.vx = -0.5
+                        // blob.x+= blob.vx
+                    })
+                }
+
             }
 
         }
-
         
+        
+
 
     </script>
 </body>
