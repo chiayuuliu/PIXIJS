@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    .wrapper{
+        width: 100%;
+        height: 250px;
+        background-color: royalblue;
+        position: relative;
+    }
+    .car{
+        position: absolute;
+        top: 20px;
+        left: 20px;
+    }
+    button{
+        cursor: pointer;
+        width: 100px;
+        height: 40px;
+        border: none;
+        background-color: salmon;
+        margin: 20px;
+        border-radius: 50px;
+        color: white;
+        font-size: 18px;
+        letter-spacing: 1px;
+    }
+</style>
+<body>
+    <div class="wrapper">
+        <div class="car">
+            <img src="./blob.png" alt="">
+        </div>
+    </div>
+
+    <button>Start</button>
+<script>
+    const wrap = document.querySelector('.wrapper')
+    const car = document.querySelector('.car')
+    const startBtn = document.querySelector('button')
+    var timer = null;
+
+    startBtn.addEventListener('click',()=>{
+        startMove(car)
+    })
+    
+    // console.log(car.offsetLeft) //car 的位置
+    // console.log(car.style.left)
+    const width = window.innerWidth
+    console.log(width)
+
+    function startMove(car) {
+        // 速度初始值
+        // var speed = 1 
+        // var a = Math.random()
+
+        // speed +=Math.random()
+        // car.style.left = car.offsetLeft + speed + 'px'
+        // timer = setInterval(function () {
+        //     console.log(car.offsetLeft)
+        //     console.log(width*0.3)
+        //     if(car.offsetLeft > width*0.3){
+        //         speed -=Math.random()
+        //         console.log('-')
+        //     }else{
+        //         speed+=Math.random();
+        //         console.log('＋')
+        //     }
+        //     car.style.left = car.offsetLeft + speed + 'px'
+            
+
+        // },50)
+        clearInterval(timer);
+        var step = Math.random()+1
+        var cur;
+        var target = parseFloat('200px');
+        timer = setInterval(function(){
+            cur = car.offsetLeft;
+            // 當目前位置+移動位置>目標位置，停在目前位置
+    　　　　　if(cur+step>target){
+                step = target - cur;
+            }
+            // 每20ms 偵測目前跟移動位置
+            car.style.left = cur + step + 'px';
+            // 如果位置跟目標位置無差距，移除timer
+            if(step == target - cur){
+                clearInterval(timer);
+            }
+        },20);
+
+    }
+</script>
+</body>
+</html>

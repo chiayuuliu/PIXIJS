@@ -45,7 +45,7 @@
         .load(setup)
 
         let blobs, state;
-
+        
         function setup() {
             gameScene = new Container();
             app.stage.addChild(gameScene)
@@ -62,6 +62,12 @@
 
             // 建立一個陣列放blob資訊
             blobs = []
+            console.log(window.innerWidth*0.3)
+            console.log(window.innerWidth*0.6)
+            console.log(window.innerWidth*0.9)
+
+            // console.log(app.stage.width)
+            // console.log(app.stage.height)
 
             for(let i = 0 ; i<BlobsNumber; i++){
                 let blob = new PIXI.Sprite(link["blob.png"].texture);
@@ -75,7 +81,6 @@
 
                 // blob.vx = -2
                 blobs.push(blob)
-                console.log(blobs)
                 // 把blob 加入 container 的畫面
                 gameScene.addChild(blob)
 
@@ -89,15 +94,32 @@
                     state(delta)
                 }
         
+                speed = [-60,20,-90,10,-70,10,-300]
+                // console.log(typeof window.innerWidth)
+                // console.log(blob.vx)
+                // 會一直被觸發
+                
                 function play(delta) {
-                    blobs.forEach(function (blob) {
-                        // blob.vx = -0.5
+                // console.log(blob.x)
+                // console.log(window.innerWidth*0.8)
+                blobs.forEach(function (blob) {
+                    // blob.vx = (Math.random())*-0.5
+                    if(blob.x<window.innerWidth*0.7 && blob.x<window.innerWidth*0.6){
+                        blob.vx =(Math.random())*1
+                    }else{
+                        // blob.vx =(Math.random())*-0.5
                         // blob.x+= blob.vx
-                    })
-                }
+                    }
+                    blob.x+= blob.vx
 
+                    // blob.vx =(Math.random())*-0.15
+                    // blob.x+= blob.vx
+                })
+            }
             }
 
+            
+            
         }
         
         
