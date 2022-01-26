@@ -18,7 +18,6 @@
 </style>
 <body>
     <script>
-
         let Application = PIXI.Application,
             Container = PIXI.Container,
             loader = PIXI.loader,
@@ -46,44 +45,46 @@
 
         let blobs, state;
         
+        console.log(app.renderer.screen.width)
         function setup() {
             gameScene = new Container();
             app.stage.addChild(gameScene)
-
             let link = PIXI.loader.resources
-            
-            // 設定每一隻
-            let BlobsNumber = 5,
-            // 每一隻間距
-            spacing = 50,
-            // 第一支距離top距離
-            yOffset = 25,
-            speed = -2,
 
+            let BlobsNumber = 5,
+            spacing = 50,
+            yOffset = 25,
+            speed = -0.3,
+            // 每3秒放慢速度，1往前，-0.5 往後
+            reverseDir=1,
+            width=window.innerWidth
             // 建立一個陣列放blob資訊
             blobs = []
-            console.log(window.innerWidth*0.3)
-            console.log(window.innerWidth*0.6)
-            console.log(window.innerWidth*0.9)
+            // 設定4.5秒後放慢往後位移
+            setInterval(() => {
+                reverseDir = reverseDir == 1 ? -0.05 : 1;
+                blobs.forEach(function (el) {
+                    if(el.x<width*0.3){
+                        setTimeout(() => {
+                            final(el)
+                        }, 1000)
+                    }
+                })
+            },4500);
 
-            // console.log(app.stage.width)
-            // console.log(app.stage.height)
-
+            // creat blobs 
             for(let i = 0 ; i<BlobsNumber; i++){
                 let blob = new PIXI.Sprite(link["blob.png"].texture);
-                // 每一隻的出發點X 位置都一樣
+                // 設定每一隻的出發點
                 let x = window.innerWidth-50;
                 let y = spacing * i + yOffset;
-
                 blob.x=x
                 blob.y=y
 
-
-                // blob.vx = -2
+                blob.vx = (Math.random())*speed*reverseDir
                 blobs.push(blob)
                 // 把blob 加入 container 的畫面
                 gameScene.addChild(blob)
-
                 // 設定遊戲狀態
                 state = play;
 
@@ -93,33 +94,15 @@
                 function gameLoop(delta) {
                     state(delta)
                 }
-        
-                speed = [-60,20,-90,10,-70,10,-300]
-                // console.log(typeof window.innerWidth)
-                // console.log(blob.vx)
+                // speed = [-60,20,-90,10,-70,10,-300]
                 // 會一直被觸發
-                
                 function play(delta) {
-                // console.log(blob.x)
-                // console.log(window.innerWidth*0.8)
                 blobs.forEach(function (blob) {
-                    // blob.vx = (Math.random())*-0.5
-                    if(blob.x<window.innerWidth*0.7 && blob.x<window.innerWidth*0.6){
-                        blob.vx =(Math.random())*1
-                    }else{
-                        // blob.vx =(Math.random())*-0.5
-                        // blob.x+= blob.vx
-                    }
+                    blob.vx =Math.random()*speed*reverseDir
                     blob.x+= blob.vx
-
-                    // blob.vx =(Math.random())*-0.15
-                    // blob.x+= blob.vx
                 })
-            }
-            }
+            }}
 
-            
-            
         }
         
         

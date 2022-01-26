@@ -35,6 +35,11 @@
         font-size: 18px;
         letter-spacing: 1px;
     }
+    .car2{
+        position: absolute;
+        top: 60px;
+        left: 20px;
+    }
 </style>
 <body>
     <div class="wrapper">
@@ -49,53 +54,48 @@
     const car = document.querySelector('.car')
     const startBtn = document.querySelector('button')
     var timer = null;
-
     startBtn.addEventListener('click',()=>{
         startMove(car)
     })
-    
-    // console.log(car.offsetLeft) //car 的位置
-    // console.log(car.style.left)
-    const width = window.innerWidth
-    console.log(width)
-
+    var width = window.innerWidth
+    var step =0
+    var cur 
     function startMove(car) {
-        // 速度初始值
-        // var speed = 1 
-        // var a = Math.random()
+        var target = width*0.3;
 
-        // speed +=Math.random()
-        // car.style.left = car.offsetLeft + speed + 'px'
-        // timer = setInterval(function () {
-        //     console.log(car.offsetLeft)
-        //     console.log(width*0.3)
-        //     if(car.offsetLeft > width*0.3){
-        //         speed -=Math.random()
-        //         console.log('-')
-        //     }else{
-        //         speed+=Math.random();
-        //         console.log('＋')
-        //     }
-        //     car.style.left = car.offsetLeft + speed + 'px'
-            
-
-        // },50)
-        clearInterval(timer);
-        var step = Math.random()+1
-        var cur;
-        var target = parseFloat('200px');
-        timer = setInterval(function(){
-            cur = car.offsetLeft;
-            // 當目前位置+移動位置>目標位置，停在目前位置
-    　　　　　if(cur+step>target){
-                step = target - cur;
+        clearInterval(car.timer);
+        car.timer = setInterval(function(){
+            cur = car.offsetLeft
+            step= 1+Math.random()*0.1
+            if(cur>width*0.3){
+                Move2(car)
+                clearInterval(car.timer)
+                step = 0
             }
-            // 每20ms 偵測目前跟移動位置
+        
             car.style.left = cur + step + 'px';
-            // 如果位置跟目標位置無差距，移除timer
-            if(step == target - cur){
-                clearInterval(timer);
+        },20);
+    }
+    
+    // second 
+    function Move2(car) {
+        // 判斷執行次數
+        let num = 0 
+        clearInterval(car.timer2);
+        car.timer2 = setInterval(function(){
+            cur = car.offsetLeft
+            if(cur>width*0.28){
+                num ++
+                step-= Math.random()*0.1
+            }else{
+                num++
+                step+= Math.random()*0.1
             }
+            // 超過一定次數 清除interval
+            if(num>200){
+                clearInterval(car.timer2)
+            }
+            car.style.left = cur + (step*0.5) + 'px';
         },20);
 
     }
