@@ -66,7 +66,10 @@
                 blobs.forEach(function (el) {
                     if(el.x<width*0.3){
                         setTimeout(() => {
-                            final(el)
+                            speed=-5
+                            reverseDir=1
+                            console.log('in')
+                            clearInterval()
                         }, 1000)
                     }
                 })
