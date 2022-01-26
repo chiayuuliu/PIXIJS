@@ -38,6 +38,7 @@
 
         document.body.appendChild(app.view);
 
+        //  載入圖片
         loader
             .add("treasureHunter.json")
             .load(setup); 
@@ -45,6 +46,8 @@
         let state, explorer, treasure, blobs, chimes, exit, player, dungeon,
             door, healthBar, message, gameScene, gameOverScene, enemies, id;
 
+
+        // 載入完後執行函式
         function setup() {
             gameScene = new Container();
             app.stage.addChild(gameScene);
@@ -99,6 +102,7 @@
                 direction *= -1;
                 blobs.push(blob);
 
+                // blob 加到container 
                 gameScene.addChild(blob);
                 console.log(blobs)
             }

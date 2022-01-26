@@ -58,20 +58,38 @@
         startMove(car)
     })
     var width = window.innerWidth
-    var step =0
+    var step =0.5
     var cur 
+    // 1 前進，-1 後退
+    var direction = 1
+    let num = 0;
+    let testPosition = setInterval(() => {
+    
+        
+    }, Math.random()*5000);
+
+    function slow() {
+        console.log('direction',direction)
+        direction = direction == 1 ? -0.05 : 1;         
+    }
+
     function startMove(car) {
         var target = width*0.3;
-
+        
         clearInterval(car.timer);
+
         car.timer = setInterval(function(){
+            num++
+            
             cur = car.offsetLeft
-            step= 1+Math.random()*0.1
             if(cur>width*0.3){
-                Move2(car)
-                clearInterval(car.timer)
-                step = 0
+                // console.log('over')
+                // direction = direction == 1 ? -0.05 : 1; 
+                // console.log('dir',direction)
+                slow()
             }
+            step= 1+Math.random()*step*direction
+
         
             car.style.left = cur + step + 'px';
         },20);

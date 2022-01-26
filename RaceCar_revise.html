@@ -54,25 +54,29 @@
             let BlobsNumber = 5,
             spacing = 50,
             yOffset = 25,
-            speed = -0.3,
+            speed = -0.35,
             // 每3秒放慢速度，1往前，-0.5 往後
             reverseDir=1,
             width=window.innerWidth
             // 建立一個陣列放blob資訊
             blobs = []
-            // 設定4.5秒後放慢往後位移
-            setInterval(() => {
-                reverseDir = reverseDir == 1 ? -0.05 : 1;
-                blobs.forEach(function (el) {
-                    if(el.x<width*0.3){
-                        setTimeout(() => {
-                            speed=-4
-                            reverseDir=1
-                            console.log('in')
-                            clearInterval()
-                        }, 1000)
-                    }
-                })
+            // 設定4.5秒後切換方向
+            let Interval = setInterval(() => {
+                if(width>750){
+                    speed = -1
+                }
+                console.log('interval')
+                reverseDir = reverseDir == 1 ? -0.1 : 1;
+                // blobs.forEach(function (el) {
+                //     if(el.x<width*0.3){
+                //         setTimeout(() => {
+                //             speed=-4
+                //             reverseDir=1
+                //             console.log('in')
+                //             clearInterval(Interval)
+                //         }, 1000)
+                //     }
+                // })
             },4500);
 
             // creat blobs 
@@ -86,7 +90,6 @@
 
                 blob.vx = (Math.random())*speed*reverseDir
                 blobs.push(blob)
-                // 把blob 加入 container 的畫面
                 gameScene.addChild(blob)
                 // 設定遊戲狀態
                 state = play;
@@ -97,9 +100,18 @@
                 function gameLoop(delta) {
                     state(delta)
                 }
-                // speed = [-60,20,-90,10,-70,10,-300]
-                // 會一直被觸發
+
                 function play(delta) {
+                    blobs.forEach(function (el) {
+                    if(el.x<width*0.3){
+                        setTimeout(() => {
+                            speed=-4
+                            reverseDir=1
+                            console.log('in')
+                            clearInterval(Interval)
+                        }, 1000)
+                    }
+                })
                 blobs.forEach(function (blob) {
                     blob.vx =Math.random()*speed*reverseDir
                     blob.x+= blob.vx
